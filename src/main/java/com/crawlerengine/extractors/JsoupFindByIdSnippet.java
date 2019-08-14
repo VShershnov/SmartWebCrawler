@@ -13,17 +13,15 @@ import java.util.stream.Collectors;
 
 
 public class JsoupFindByIdSnippet {
-    private static final String RESOURCE_PATH = "./samples/startbootstrap-freelancer-gh-pages-cut.html";
     private static final String TARGET_ELEMENT_ID = "sendMessageButton";
     private static final String CHARSET_NAME = "utf8";
 
     private static Logger LOGGER = LoggerFactory.getLogger(JsoupFindByIdSnippet.class);
 
-    public Optional<String> findById(String resourcePath, String targetElementId) {
+    public Optional<Element> findById(String resourcePath, String targetElementId) {
 
         // Jsoup requires an absolute file path to resolve possible relative paths in HTML,
         // so providing InputStream through classpath resources is not a case
-        resourcePath = RESOURCE_PATH;
         targetElementId = TARGET_ELEMENT_ID;
 
         Optional<Element> buttonOpt = findElementById(new File(resourcePath), targetElementId);
@@ -37,7 +35,7 @@ public class JsoupFindByIdSnippet {
         stringifiedAttributesOpt.ifPresent(attrs ->
                 LOGGER.info("Target element attrs: [{}]", attrs));
 
-        return stringifiedAttributesOpt;
+        return buttonOpt;
     }
 
     private Optional<Element> findElementById(File htmlFile, String targetElementId) {
